@@ -7,7 +7,6 @@ using System;
 public class GameData
 {
     public Vector3 playerPosition;
-    // Aggiungi qui tutti gli altri dati di gioco che vuoi salvare
 }
 
 public class SaveManager : MonoBehaviour
@@ -15,7 +14,7 @@ public class SaveManager : MonoBehaviour
     public static SaveManager Instance { get; private set; }
 
     private string saveFilePath;
-    public bool shouldLoadGame { get; set; } // Nuovo flag
+    public bool shouldLoadGame { get; set; }
 
     private void Awake()
     {
@@ -34,7 +33,7 @@ public class SaveManager : MonoBehaviour
 
     public GameData LoadGame()
     {
-        if (shouldLoadGame && File.Exists(saveFilePath)) // Controlla il flag
+        if (shouldLoadGame && File.Exists(saveFilePath))
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(GameData));
             using (FileStream stream = new FileStream(saveFilePath, FileMode.Open))
@@ -43,7 +42,6 @@ public class SaveManager : MonoBehaviour
                 {
                     GameData loadedData = (GameData)serializer.ReadObject(stream);
                     Debug.Log("Dati di gioco caricati da: " + saveFilePath);
-                    // Resetta il flag dopo il caricamento (opzionale, dipende dal tuo flusso)
                     shouldLoadGame = false;
                     return loadedData;
                 }

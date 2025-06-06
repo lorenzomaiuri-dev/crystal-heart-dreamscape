@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour
         fireTimer = 0f;
         shotsFired = 0;
 
-        // Istanzia la barra della salute dal Prefab
+        // Create hpBarFill
         if (hpBarFillRectTransformInstance != null)
         {
             hpBarInitialFillWidth = hpBarFillRectTransformInstance.rect.width;
@@ -139,7 +139,7 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            // block attack sound - dink!
+            // block attack soun
             // SoundManager.Instance.Play(blockAttackClip);
         }
     }
@@ -158,7 +158,6 @@ public class EnemyController : MonoBehaviour
 
     void StopDefeatAnimation()
     {
-        // we have this function in case we want to remove the explosion before it finishes
         Destroy(explodeEffect);
     }
 
@@ -176,7 +175,7 @@ public class EnemyController : MonoBehaviour
     {
         // freeze/unfreeze the enemy on screen
         // zero animation speed and freeze XYZ rigidbody constraints
-        // NOTE: this will be called from the GameManager but could be used in other scripts
+        // this will be called from the GameManager but could be used in other scripts
         if (freeze)
         {
             freezeEnemy = true;
@@ -196,7 +195,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Infliggi danno al giocatore
+            // Damage Player
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
@@ -213,7 +212,7 @@ public class EnemyController : MonoBehaviour
             hpBarFillRectTransformInstance.sizeDelta = new Vector2(hpBarInitialFillWidth * fillPercentage,
                 hpBarFillRectTransformInstance.sizeDelta.y);
 
-            // Imposta l'anchor in modo che si riduca dal lato corretto
+            // Set anchor
             hpBarFillRectTransformInstance.anchorMax =
                 new Vector2(fillPercentage, hpBarFillRectTransformInstance.anchorMax.y);
         }
@@ -231,7 +230,7 @@ public class EnemyController : MonoBehaviour
             BulletController bulletController = bullet.GetComponent<BulletController>();
             if (bulletController != null)
             {
-                bulletController.SetBulletType(BulletController.BulletTypes.Default); // Imposta il tipo di proiettile
+                bulletController.SetBulletType(BulletController.BulletTypes.Default);
                 bulletController.SetDamageValue(bulletDamage);
                 bulletController.SetBulletSpeed(bulletSpeed);
 

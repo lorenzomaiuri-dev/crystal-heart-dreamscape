@@ -19,7 +19,7 @@ public class MainMenuUIController : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("Uscita dal gioco!"); // Questo messaggio apparirà nella Console di Unity
+        Debug.Log("Uscita dal gioco!");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

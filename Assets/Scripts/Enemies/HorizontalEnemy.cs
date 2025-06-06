@@ -4,30 +4,29 @@ using UnityEngine;
 
 public class HorizontalEnemy : MonoBehaviour
 {
-    public float speed = 2f; // Velocità di movimento
-    public bool moveRight = true; // Direzione iniziale del movimento (true = destra, false = sinistra)
+    public float speed = 2f;
+    public bool moveRight = true;
 
-    private Vector2 direction; // Direzione di movimento
-    private GameObject player; // Riferimento al giocatore
+    private Vector2 direction;
+    private GameObject player;
     private EnemyController enemyController;
 
     void Start()
     {
         enemyController = GetComponent<EnemyController>();
-        // Otteniamo il riferimento al giocatore
+        
         player = GameObject.FindGameObjectWithTag("Player");
         
-        // Imposta la direzione iniziale in base alla variabile moveRight
         direction = moveRight ? Vector2.right : Vector2.left;
         
-        // Disabilita la gravità
+        // No gravity
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
     }
 
     void Update()
     {
-        // Muovi il nemico orizzontalmente
+        // Horizontal movement
         transform.Translate(direction * speed * Time.deltaTime);
     }
     
@@ -35,8 +34,8 @@ public class HorizontalEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Il nemico si ferma quando colpisce il personaggio
-            speed = 0f; // Ferma il movimento orizzontale del nemico
+            // Stop
+            speed = 0f;
         }
     }
 
@@ -44,8 +43,8 @@ public class HorizontalEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Riavvia il movimento del nemico quando il personaggio si allontana
-            speed = 2f; // Ripristina la velocità di movimento del nemico (o imposta il valore desiderato)
+            // Restart moving
+            speed = 2f;
         }
     }
 

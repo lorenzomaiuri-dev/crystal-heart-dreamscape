@@ -8,7 +8,6 @@ public class LevelController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        // Checks if the object that entered the trigger has the tag "Player" (or the tag you use for your player).
         if (collider.CompareTag("Player"))
         {
             LoadNextScene();

@@ -57,11 +57,8 @@ public class PlayerActions : MonoBehaviour
     
     public void ShootBullet()
     {
-        // create bullet from prefab gameobject
-
+        
         GameObject bullet = Instantiate(bulletPrefab, bulletShootPos.position, Quaternion.identity);
-
-        // set its name to that of the prefab so it doesn't include "(Clone)" when instantiated
 
         bullet.name = bulletPrefab.name;
 

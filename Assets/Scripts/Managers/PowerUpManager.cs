@@ -11,7 +11,7 @@ public class PowerUpManager : MonoBehaviour
     // Initialize the singleton instance.
     private void Awake()
     {
-        // If there is not already an instance of SoundManager, set it to this.
+        // If there is not already an instance, set it to this.
         if (Instance == null)
         {
             Instance = this;

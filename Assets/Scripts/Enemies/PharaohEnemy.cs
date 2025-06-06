@@ -27,10 +27,8 @@ public class PharaohEnemy : MonoBehaviour
 
     void Update()
     {
-        // Verifica se il nemico è a terra
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-
-        // Gestione del salto
+        
         jumpTimer -= Time.deltaTime;
         if (isGrounded && jumpTimer <= 0)
         {

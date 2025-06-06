@@ -36,57 +36,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Audio Clips")]
     [SerializeField] AudioClip jumpLandedClip;
     
-    // Simula movimento e azioni da un input registrato
-    public void SimulateMovement(float horizontal, bool jump, bool dash)
-    {
-        // Movimento orizzontale diretto (senza InputManager)
-        if (!isDashing)
-        {
-            if (horizontal != 0)
-            {
-                if ((isFacingRight && horizontal < 0) || (!isFacingRight && horizontal > 0))
-                {
-                    Flip();
-                }
-
-                if (isGrounded)
-                {
-                    PlayAnimation(isShooting ? "PlayerShooting" : "PlayerRunning");
-                }
-
-                rb2d.velocity = new Vector2(moveSpeed * horizontal, rb2d.velocity.y);
-            }
-            else
-            {
-                if (isGrounded)
-                {
-                    PlayAnimation(isShooting ? "PlayerShooting" : "PlayerIdle");
-                }
-
-                rb2d.velocity = new Vector2(0f, rb2d.velocity.y);
-            }
-        }
-
-        // Simula salto
-        if (jump && jumpCount < maxJumps)
-        {
-            PlayAnimation(isShooting ? "PlayerShooting" : "PlayerRunning");
-            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
-            jumpCount++;
-
-            if (PowerUpManager.Instance.hasDoubleJump && jumpCount == 1)
-            {
-                maxJumps = 2;
-            }
-        }
-
-        // Simula dash (istantaneo, no coroutine)
-        if (dash && PowerUpManager.Instance.hasDash && Time.time >= lastDashTime + dashCooldown && !isDashing)
-        {
-            StartCoroutine(Dash()); // mantieni coroutine perché gestisce tempi e gravità
-        }
-    }
-    
     public void SetShooting(bool value)
     {
         isShooting = value;
@@ -144,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (isJumping)
             {
-                OnLanding(); // Resetta i salti
+                OnLanding(); // Reset
                 //SoundManager.Instance.Play(jumpLandedClip);
             }
         }
@@ -247,27 +196,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJump()
     {
-        // Consenti al giocatore di saltare se ha il power-up o se è a terra
         if (InputManager.Instance.jumpInput && jumpCount < maxJumps)
         {
             PlayAnimation(isShooting ? "PlayerShooting" : "PlayerRunning");
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
             jumpCount++;
-
-            // Se il giocatore ha il power-up del doppio salto, consenti un secondo salto
+            
             if (PowerUpManager.Instance.hasDoubleJump && jumpCount == 1)
             {
-                maxJumps = 2; // Permetti il doppio salto
+                maxJumps = 2;
             }
         }
     }
 
     private void OnLanding()
     {
-        // Reset dei salti disponibili quando il giocatore tocca terra
+        // reset
         isJumping = false;
         jumpCount = 0;
-        maxJumps = 1; // Reset al valore di default
+        maxJumps = 1;
     }
 
     private void HandleAirborneAnimation()
@@ -286,12 +233,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        // Inverti la direzione in cui il personaggio sta guardando
         isFacingRight = !isFacingRight;
-
-        // Modifica la scala lungo l'asse X per flipparlo
+        
         Vector3 localScale = transform.localScale;
-        localScale.x = -localScale.x;  // Inverti la scala sull'asse X
+        localScale.x = -localScale.x;
         transform.localScale = localScale;
     }
     

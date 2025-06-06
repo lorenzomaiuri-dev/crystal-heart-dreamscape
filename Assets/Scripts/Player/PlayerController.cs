@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Istanzia la barra della salute dal Prefab
+        // HpBarFill
         if (hpBarFillRectTransformInstance != null)
         {
             hpBarInitialFillWidth = hpBarFillRectTransformInstance.rect.width;
@@ -115,8 +115,6 @@ public class PlayerController : MonoBehaviour
 
         //SoundManager.Instance.Play(energyFillClip, true);
 
-
-
         for (int i = 0; i < amount; i++)
 
         {
@@ -140,11 +138,7 @@ public class PlayerController : MonoBehaviour
     public void HitSide(bool rightSide)
 
     {
-
-        // determines the push direction of the hit animation
-
         hitSideRight = rightSide;
-
     }
     
     public void Invincible(bool invincibility)
@@ -162,15 +156,13 @@ public class PlayerController : MonoBehaviour
         if (!isInvincible)
     
         {
-            // take damage amount from health and update the health bar
     
             currentHealth -= damage;
     
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
             UpdateHealthBar();
-    
-            // no more health means defeat, otherwise take damage
+            
     
             if (currentHealth <= 0)
     
@@ -192,13 +184,6 @@ public class PlayerController : MonoBehaviour
     void StartDamageAnimation()
     
     {
-    
-        // once isTakingDamage is true in the Update function we'll play the Hit animation
-    
-        // here we go invincible so we don't repeatedly take damage, determine the X push force
-    
-        // depending which side we were hit on, and then apply that force
-    
         if (!isTakingDamage)
     
         {
@@ -228,9 +213,6 @@ public class PlayerController : MonoBehaviour
     void StopDamageAnimation()
     
     {
-        // this function is called at the end of the Hit animation
-        // and we reset the animation because it doesn't loop otherwise
-        // we can end up stuck in it
         isTakingDamage = false;
         //animator.Play("Player_Hit", -1, 0f);
         StartCoroutine(FlashAfterDamage());
@@ -239,11 +221,6 @@ public class PlayerController : MonoBehaviour
     private IEnumerator FlashAfterDamage()
 
     {
-
-        // hit animation is 12 samples
-
-        // keep flashing consistent with 1/12 secs
-
         float flashDelay = 0.0833f;
 
         // toggle transparency
@@ -308,11 +285,8 @@ public class PlayerController : MonoBehaviour
 
     void Defeat()
     {
-        // tell the game manager we died so it can take control
-        GameManager.Instance.PlayerDefeated();
-        // we died! player defeat animation - half second delay
         //Invoke("StartDefeatAnimation", 0.5f);
-    
+        GameManager.Instance.PlayerDefeated();
     }
     
     public void FreezePlayer(bool freeze)
@@ -343,7 +317,7 @@ public class PlayerController : MonoBehaviour
             float fillPercentage = (float)currentHealth / maxHealth;
             hpBarFillRectTransformInstance.sizeDelta = new Vector2(hpBarInitialFillWidth * fillPercentage, hpBarFillRectTransformInstance.sizeDelta.y);
 
-            // Imposta l'anchor in modo che si riduca dal lato corretto
+            // Set anchor
             hpBarFillRectTransformInstance.anchorMax = new Vector2(fillPercentage, hpBarFillRectTransformInstance.anchorMax.y);
         }
         else

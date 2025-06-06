@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        // If there is not already an instance of SoundManager, set it to this.
+        // If there is not already an instance, set it to this.
         if (Instance == null)
         {
             Instance = this;
@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //Set InputManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
+        //Set to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
         DontDestroyOnLoad(gameObject);
     }
 

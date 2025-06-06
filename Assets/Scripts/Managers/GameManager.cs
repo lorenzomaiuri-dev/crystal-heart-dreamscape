@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     // Initialize the singleton instance
     private void Awake()
     {
-        // If there is not already an instance of SoundManager, set it to this
+        // If there is not already an instance, set it to this
         if (Instance == null)
         {
             Instance = this;
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Set GameManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene
+        // Set to DontDestroyOnLoad so that it won't be destroyed when reloading our scene
         DontDestroyOnLoad(gameObject);
     }
 
@@ -54,8 +54,7 @@ public class GameManager : MonoBehaviour
             SetGameState(currentGameState == GameState.Playing ? GameState.Paused : GameState.Playing);
             InputManager.Instance.pauseInput = false;
         }
-
-        // if the game isn't over then spawn enemies
+        
         if (currentGameState == GameState.Playing)
         {
             // here is where we can do things while the game is running
@@ -135,7 +134,6 @@ public class GameManager : MonoBehaviour
             if (playerObject != null)
             {
                 playerObject.transform.position = loadedData.playerPosition;
-                // Applica anche altri dati caricati (livello, punteggio, ecc.)
                 //Debug.Log("Dati di gioco caricati e applicati.");
             }
             else
@@ -145,7 +143,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Nessun salvataggio trovato, potresti voler inizializzare una nuova partita qui
             //Debug.Log("Nessun salvataggio trovato all'avvio della scena di gioco.");
         }
     }
@@ -160,7 +157,6 @@ public class GameManager : MonoBehaviour
             if (playerObject != null)
             {
                 playerObject.transform.position = loadedData.playerPosition;
-                // Applica anche altri dati caricati (livello, punteggio, ecc.)
                 //Debug.Log("Dati di gioco caricati e applicati.");
             }
             else
@@ -170,7 +166,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Nessun salvataggio trovato, potresti voler inizializzare una nuova partita qui
             //Debug.Log("Nessun salvataggio trovato all'avvio della scena di gioco.");
         }
     }
@@ -269,7 +264,7 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.Playing:
-                Time.timeScale = 1f; // Ripristina il tempo
+                Time.timeScale = 1f;
                 if (pauseMenuUIController != null)
                 {
                     pauseMenuUIController.HidePauseMenu();
@@ -277,7 +272,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case GameState.Paused:
-                Time.timeScale = 0f; // Congela il tempo
+                Time.timeScale = 0f;
                 if (pauseMenuUIController != null)
                 {
                     pauseMenuUIController.ShowPauseMenu();
@@ -285,7 +280,6 @@ public class GameManager : MonoBehaviour
 
                 break;
             case GameState.GameOver:
-                // Logica per il game over
                 Time.timeScale = 0f;
                 break;
             default:
@@ -299,13 +293,11 @@ public class GameManager : MonoBehaviour
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (GameObject bullet in bullets)
         {
-            // bullet is out of view so destroy it
             if (bullet.transform.position.x < worldViewCoords.Left ||
                 bullet.transform.position.x > worldViewCoords.Right ||
                 bullet.transform.position.y > worldViewCoords.Top ||
                 bullet.transform.position.y < worldViewCoords.Bottom)
             {
-                // buh bye bullet
                 Destroy(bullet);
             }
         }
@@ -336,7 +328,6 @@ public class GameManager : MonoBehaviour
         // get camera world coordinates just outside the left-bottom and top-right views
         Vector3 wv0 = Camera.main.ViewportToWorldPoint(new Vector3(-0.1f, -0.1f, 0));
         Vector3 wv1 = Camera.main.ViewportToWorldPoint(new Vector3(1.1f, 1.1f, 0));
-        // and then update the world view coords var so it can used when needed
         worldViewCoords.Left = wv0.x;
         worldViewCoords.Bottom = wv0.y;
         worldViewCoords.Right = wv1.x;
