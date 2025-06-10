@@ -1,5 +1,5 @@
 # Crystal Heart Dreamscape
-![Magical Girl Protagonist](./Assets/Sprites/Player/Magical Girl/Magical_girl_64_bit_idle_0.png)
+![Magical Girl Protagonist](images/player.png)
 ## Project Overview
 
 Welcome to **Crystal Heart Dreamscape**, a charming and mystical Metroidvania-style video game currently under development in Unity. This project is being created as part of an academic assignment.
